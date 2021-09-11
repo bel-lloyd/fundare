@@ -13,3 +13,15 @@ class Dares(models.Model):
     for_charity = models.TextField()
     charity_url = models.URLField()
     owner = models.CharField(max_length=200)
+
+class Dollars(models.Model):
+    amount = models.IntegerField()
+    comment = models.TextField()
+    anonymous = models.BooleanField()
+    dare = models.ForeignKey(
+        'Dares',
+        on_delete=models.CASCADE,
+        related_name='dollars'
+    )
+    supporter = models.CharField(max_length=200)
+    # created_at = models.DateTimeField()
