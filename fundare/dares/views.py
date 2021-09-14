@@ -4,9 +4,11 @@ from rest_framework.response import Response
 from .models import Dares, Dollars
 from .serializers import DaresSerializer, DollarsSerializer, DaresDetailSerializer
 from django.http import Http404
-from rest_framework import serializers, status
+from rest_framework import serializers, status, permissions
 
 class DaresList(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         dares = Dares.objects.all()
         serializer = DaresSerializer(dares, many=True)
@@ -37,6 +39,17 @@ class DaresDetail(APIView):
         dares = self.get_object(pk)
         serializer = DaresDetailSerializer(dares)
         return Response(serializer.data)
+
+    def put(self, request, pk):
+        project = self.get_object(pk)
+        data = request.data
+        serializer = ProjectDetailSerializer(
+            instance=project,
+            data=data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
 
 class DollarsList(APIView):
 
