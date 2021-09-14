@@ -27,7 +27,7 @@ class DaresSerializer(serializers.Serializer):
     date_for_dare = serializers.DateTimeField()
     for_charity = serializers.CharField()
     charity_url = serializers.URLField()
-    owner = serializers.CharField(max_length=200)
+    owner = serializers.ReadOnlyField(source='owner.id')
 
     def create(self, validated_data):
         return Dares.objects.create(**validated_data)
