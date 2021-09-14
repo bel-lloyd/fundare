@@ -8,7 +8,7 @@ class DollarsSerializer(serializers.Serializer):
     amount = serializers.IntegerField()
     comment = serializers.CharField()
     anonymous = serializers.BooleanField()
-    dare = serializers.IntegerField()
+    dares_id = serializers.IntegerField()
     supporter = serializers.CharField(max_length=200)
 
     def create(self, validated_data):
@@ -28,7 +28,6 @@ class DaresSerializer(serializers.Serializer):
     for_charity = serializers.CharField()
     charity_url = serializers.URLField()
     owner = serializers.CharField(max_length=200)
-    dollars = DollarsSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         return Dares.objects.create(**validated_data)
