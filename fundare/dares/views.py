@@ -5,6 +5,7 @@ from .models import Dares, Dollars
 from .serializers import DaresSerializer, DollarsSerializer, DaresDetailSerializer
 from django.http import Http404
 from rest_framework import serializers, status, permissions
+from .permissions import IsOwnerOrReadOnly
 
 class DaresList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -28,10 +29,16 @@ class DaresList(APIView):
         )
 
 class DaresDetail(APIView):
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    ]
 
     def get_object(self, pk):
         try:
-            return Dares.objects.get(pk=pk)
+            dares = Dares.objects.get(pk=pk)
+            self.check_object_permissions(self.request, dares)
+            return dares
         except Dares.DoesNotExist:
             raise Http404
 
@@ -43,7 +50,7 @@ class DaresDetail(APIView):
     def put(self, request, pk):
         project = self.get_object(pk)
         data = request.data
-        serializer = ProjectDetailSerializer(
+        serializer = DaresDetailSerializer(
             instance=project,
             data=data,
             partial=True
