@@ -9,7 +9,7 @@ class DollarsSerializer(serializers.Serializer):
     comment = serializers.CharField()
     anonymous = serializers.BooleanField()
     dares_id = serializers.IntegerField()
-    supporter = serializers.CharField(max_length=200)
+    supporter = serializers.ReadOnlyField(source='supporter.id')
 
     def create(self, validated_data):
         return Dollars.objects.create(**validated_data)
@@ -44,4 +44,13 @@ class DaresDetailSerializer(DaresSerializer):
         instance.date_created = validated_data.get('date_created',instance.date_created)
         instance.owner = validated_data.get('owner',instance.owner)
         instance.save()
+        return instance
+
+class DollarsDetailSerializer(DollarsSerializer):
+    def update(self, instance, validated_data):
+        instance.amount = validated_data.get('amount',instance.amount)
+        instance.comment = validated_data.get('comment',instance.comment)
+        instance.anonymous = validated_data.get('anonymous',instance.anonymous)
+        instance.supporter = validated_data.get('anonymous',instance.supporter)
+        instance.dares_id = validated_data.get('dares_id',instance.dares_id)
         return instance

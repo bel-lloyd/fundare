@@ -58,6 +58,11 @@ class DaresDetail(APIView):
         if serializer.is_valid():
             serializer.save()
 
+    def delete(self, request, pk, format=None):
+        Dares = self.get_object(pk)
+        Dares.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class DollarsList(APIView):
 
     def get(self, request):
@@ -68,7 +73,7 @@ class DollarsList(APIView):
     def post(self, request):
         serializer = DollarsSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(supporter=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -77,3 +82,8 @@ class DollarsList(APIView):
             serializer.errors, 
             status=status.HTTP_400_BAD_REQUEST
         )
+
+    def delete(self, request, pk, format=None):
+        Dollars = self.get_object(pk)
+        Dollars.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
