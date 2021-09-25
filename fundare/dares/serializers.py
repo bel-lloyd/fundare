@@ -37,11 +37,16 @@ class DaresDetailSerializer(DaresSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title',instance.title)
-        instance.description = validated_data.get('description',instance.description)
+        instance.dare_description = validated_data.get('dare_description',instance.dare_description)
+        instance.rules = validated_data.get('rules',instance.rules)
         instance.goal = validated_data.get('goal',instance.goal)
         instance.image = validated_data.get('image',instance.image)
         instance.is_open = validated_data.get('is_open',instance.is_open)
-        instance.date_created = validated_data.get('date_created',instance.date_created)
+        instance.created_at = validated_data.get('created_at',instance.created_at)
+        instance.updated_at = validated_data.get('updated_at',instance.updated_at)
+        instance.date_for_dare = validated_data.get('date_for_dare', instance.date_for_dare)
+        instance.for_charity = validated_data.get('for_charity', instance.for_charity)
+        instance.charity_url = validated_data.get('charity_url', instance.charity_url)
         instance.owner = validated_data.get('owner',instance.owner)
         instance.save()
         return instance
