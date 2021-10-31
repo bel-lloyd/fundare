@@ -19,6 +19,18 @@ class Dares(models.Model):
         related_name='owner_dares'
         )
 
+    @property
+    def show_all_charities(self):
+        all_charities = self.charity_set.all()
+        charity_names = []
+        for charity in all_charities:
+            charity_names.append(charity.charity)
+        return charity_names
+
+class Charity(models.Model):
+    name = models.CharField(max_length=200, default='')
+    dares = models.ManyToManyField(Dares)
+
 class Dollars(models.Model):
     amount = models.IntegerField()
     comment = models.TextField()
@@ -28,8 +40,8 @@ class Dollars(models.Model):
         on_delete=models.CASCADE,
         related_name='dollars'
     )
-
     supporter = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='supporter_dollars')
+        related_name='supporter_dollars'
+    )

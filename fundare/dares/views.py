@@ -1,11 +1,13 @@
-from django.shortcuts import render
+# from django.shortcuts import render
+from rest_framework.fields import MISSING_ERROR_MESSAGE
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Dares, Dollars
+from .models import Dares, Dollars, Charity
 from .serializers import DaresSerializer, DollarsSerializer, DaresDetailSerializer, DollarsDetailSerializer
 from django.http import Http404
-from rest_framework import serializers, status, permissions
-from .permissions import IsOwnerOrReadOnly
+from rest_framework import status, permissions
+from .permissions import IsOwnerOrReadOnly, IsDonorOrReadOnly
+from rest_framework.decorators import api_view
 
 class DaresList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -48,10 +50,10 @@ class DaresDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk):
-        project = self.get_object(pk)
+        dares = self.get_object(pk)
         data = request.data
         serializer = DaresDetailSerializer(
-            instance=project,
+            instance=dares,
             data=data,
             partial=True
         )
@@ -67,7 +69,7 @@ class DaresDetail(APIView):
     def delete(self, request, pk, format=None):
         Dares = self.get_object(pk)
         Dares.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(dict(message="Project successfully deleted"))
 
 class DollarsList(APIView):
 
@@ -92,7 +94,7 @@ class DollarsList(APIView):
 class DollarsDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsOwnerOrReadOnly
+        IsDonorOrReadOnly
     ]
 
     def get_object(self, pk):
