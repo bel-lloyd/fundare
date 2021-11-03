@@ -6,7 +6,7 @@ from .models import Dares, Dollars, Charity
 from .serializers import DaresSerializer, DollarsSerializer, DaresDetailSerializer, DollarsDetailSerializer
 from django.http import Http404
 from rest_framework import status, permissions
-from .permissions import IsOwnerOrReadOnly, IsDonorOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsSupporterOrReadOnly
 from rest_framework.decorators import api_view
 
 class DaresList(APIView):
@@ -94,7 +94,7 @@ class DollarsList(APIView):
 class DollarsDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsDonorOrReadOnly
+        IsSupporterOrReadOnly
     ]
 
     def get_object(self, pk):
