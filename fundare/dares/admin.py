@@ -4,7 +4,7 @@ from .models import Charity, Dares, Dollars
 # Register your models here.
 class DaresAdmin(admin.ModelAdmin):
     list_filter = ("owner", "is_open",)
-    list_display = ("title", "dare_description", "goal", "image", "date_created",)
+    list_display = ("title", "dare_description", "goal", "image",)
 
 
 class DollarsAdmin(admin.ModelAdmin):
