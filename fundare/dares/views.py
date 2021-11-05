@@ -2,7 +2,7 @@
 from rest_framework.fields import MISSING_ERROR_MESSAGE
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Dares, Dollars, Charity
+from .models import Dares, Dollars
 from .serializers import DaresSerializer, DollarsSerializer, DaresDetailSerializer, DollarsDetailSerializer
 from django.http import Http404
 from rest_framework import status, permissions
@@ -67,8 +67,8 @@ class DaresDetail(APIView):
         )
 
     def delete(self, request, pk, format=None):
-        Dares = self.get_object(pk)
-        Dares.delete()
+        dares = self.get_object(pk)
+        dares.delete()
         return Response(dict(message="Project successfully deleted"))
 
 class DollarsList(APIView):
@@ -129,6 +129,6 @@ class DollarsDetail(APIView):
             )
 
     def delete(self, request, pk, format=None):
-        Dollars = self.get_object(pk)
-        Dollars.delete()
+        dollars = self.get_object(pk)
+        dollars.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

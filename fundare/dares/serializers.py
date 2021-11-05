@@ -1,7 +1,7 @@
 from re import S
 from django.db.models.query_utils import select_related_descend
 from rest_framework import serializers
-from .models import Dares, Dollars, Charity
+from .models import Dares, Dollars
 
 class DollarsSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
