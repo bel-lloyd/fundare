@@ -19,17 +19,17 @@ class Dares(models.Model):
         related_name='owner_dares'
         )
 
-#     @property
-#     def show_all_charities(self):
-#         all_charities = self.charity_set.all()
-#         charity_names = []
-#         for charity in all_charities:
-#             charity_names.append(charity.charity)
-#         return charity_names
+    @property
+    def show_all_charities(self):
+        all_charities = self.charity_set.all()
+        charity_names = []
+        for charity in all_charities:
+            charity_names.append(charity.charity)
+        return charity_names
 
-# class Charity(models.Model):
-#     name = models.CharField(max_length=200, default='')
-#     dares = models.ManyToManyField(Dares)
+class Charity(models.Model):
+    name = models.CharField(max_length=200, default='')
+    dares = models.ManyToManyField(Dares)
 
 class Dollars(models.Model):
     amount = models.IntegerField()
