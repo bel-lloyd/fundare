@@ -56,6 +56,6 @@ class DollarsDetailSerializer(DollarsSerializer):
         instance.amount = validated_data.get('amount',instance.amount)
         instance.comment = validated_data.get('comment',instance.comment)
         instance.anonymous = validated_data.get('anonymous',instance.anonymous)
-        instance.supporter = validated_data.get('anonymous',instance.supporter)
+        instance.supporter = validated_data.get('supporter',instance.supporter)
         instance.dares_id = validated_data.get('dares_id',instance.dares_id)
         return instance

@@ -40,8 +40,9 @@ class Dollars(models.Model):
         on_delete=models.CASCADE,
         related_name='dollars'
     )
-    supporter = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='supporter_dollars'
-    )
+    supporter = models.TextField
+    # supporter = models.ForeignKey(
+    #     get_user_model(),
+    #     on_delete=models.CASCADE,
+    #     related_name='supporter_dollars'
+    # )
