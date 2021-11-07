@@ -3,8 +3,8 @@ from django.contrib.auth import get_user_model
 
 class Dares(models.Model):
     title = models.CharField(max_length=200)
-    dare_description = models.TextField()
-    rules = models.TextField()
+    dare_description = models.TextField(default='')
+    rules = models.TextField(default='')
     goal = models.IntegerField()
     image = models.URLField()
     is_open = models.BooleanField()
@@ -19,18 +19,6 @@ class Dares(models.Model):
         related_name='owner_dares'
         )
 
-    @property
-    def show_all_charities(self):
-        all_charities = self.charity_set.all()
-        charity_names = []
-        for charity in all_charities:
-            charity_names.append(charity.charity)
-        return charity_names
-
-class Charity(models.Model):
-    name = models.CharField(max_length=200, default='')
-    dares = models.ManyToManyField(Dares)
-
 class Dollars(models.Model):
     amount = models.IntegerField()
     comment = models.TextField()
@@ -38,10 +26,12 @@ class Dollars(models.Model):
     dares = models.ForeignKey(
         'Dares',
         on_delete=models.CASCADE,
-        related_name='dollars'
+        related_name='dollars',
+        default=""
     )
     supporter = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='supporter_dollars'
+        related_name='supporter_dollars',
+        default=""
     )
