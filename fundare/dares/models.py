@@ -3,8 +3,8 @@ from django.contrib.auth import get_user_model
 
 class Dares(models.Model):
     title = models.CharField(max_length=200)
-    dare_description = models.TextField(default='')
-    rules = models.TextField(default='')
+    dare_description = models.TextField(default='', blank=True)
+    rules = models.TextField(default='', blank=True)
     goal = models.IntegerField()
     image = models.URLField()
     is_open = models.BooleanField()
@@ -23,15 +23,15 @@ class Dollars(models.Model):
     amount = models.IntegerField()
     comment = models.TextField()
     anonymous = models.BooleanField()
-    dares = models.ForeignKey(
+    dare = models.ForeignKey(
         'Dares',
         on_delete=models.CASCADE,
         related_name='dollars',
-        default=""
+        null=True
     )
     supporter = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
         related_name='supporter_dollars',
-        default=""
+        null=True
     )
