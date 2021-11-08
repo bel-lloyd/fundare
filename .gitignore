@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+fundare/db.sqlite3.old

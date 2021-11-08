@@ -8,7 +8,7 @@ class DaresAdmin(admin.ModelAdmin):
 
 class DollarsAdmin(admin.ModelAdmin):
     list_display = ("amount", "comment", "anonymous", "supporter",)
-    list_filter = ("dares", "anonymous",)
+    list_filter = ("dare", "anonymous",)
 
 admin.site.register(Dares, DaresAdmin)
 admin.site.register(Dollars, DollarsAdmin)
